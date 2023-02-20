@@ -25,8 +25,12 @@ export class ClientesListaComponent implements OnInit {
         .subscribe(resposta => this.clientes = resposta);
   }
 
-  public irParaNovoCadastro(){
-    this.router.navigate(['/clientes-form']);
+  public irParaNovoCadastro(id: number){
+    if (id){
+      this.router.navigate(['/clientes-form/'+id]);
+    }else{
+      this.router.navigate(['/clientes-form']);
+    }
   }
 
 }

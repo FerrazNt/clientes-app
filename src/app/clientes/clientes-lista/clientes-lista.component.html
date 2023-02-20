@@ -6,7 +6,7 @@
     <div class="row">
         <div>
             <div class="bg-light p-2 border rounded-3">
-                <button class="btn btn-primary" (click)="irParaNovoCadastro()"><i class="fa fa-plus"></i> Novo</button>
+                <button class="btn btn-primary" (click)="irParaNovoCadastro"><i class="fa fa-plus"></i> Novo</button>
             </div>
         </div>
 </div>
@@ -30,7 +30,7 @@
                     <td>{{ cliente.cpf }}</td>
                     <td>{{ cliente.dataCadastro }}</td>
                     <td>
-                        <button type="button" class="btn btn-primary mr-1"><i class="fa fa-edit"></i></button>
+                        <button type="button" class="btn btn-primary mr-1" (click)="irParaNovoCadastro(cliente.id)"><i class="fa fa-pen"></i></button>
                         <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>

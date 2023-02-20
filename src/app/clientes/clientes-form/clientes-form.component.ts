@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-
 import { Cliente } from '../cliente';
 import { ClientesService } from '../../clientes.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-clientes-form',
@@ -15,7 +14,8 @@ export class ClientesFormComponent {
   erros: String[] | undefined;
 
   constructor( private service : ClientesService,
-               private router : Router ){
+               private router : Router, 
+               private activatedRouter: ActivatedRoute){
     this.cliente = new Cliente();
   }
 
@@ -24,7 +24,7 @@ export class ClientesFormComponent {
       .service
       .salvarCliente(this.cliente)
       .subscribe(response => {
-        console.log(response);
+        //console.log(response);
         this.erros = [];
         this.cliente.id = response.id;
         this.cliente.dataCadastro= response.dataCadastro;
@@ -41,7 +41,21 @@ export class ClientesFormComponent {
   }
 
   ngOnInit(): void {
-  
+    let id = this.activatedRouter.snapshot.paramMap.get('id');
+    if (id){
+      this
+        .service
+        .buscarClientesPorId(id)
+        .subscribe(response => {
+            this.erros = [];            
+            this.cliente.id = response.id;
+            this.cliente.dataCadastro = response.dataCadastro;
+            this.cliente.cpf = response.cpf;            
+            this.cliente.nome = response.nome;
+        });
+    }else{
+      null;
+    }
   }
 
 }

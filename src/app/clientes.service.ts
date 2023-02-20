@@ -22,4 +22,8 @@ export class ClientesService {
     return this.http.get<Cliente[]>('http://localhost:8080/api/clientes');
   }
 
+  buscarClientesPorId(id: string): Observable<Cliente>{
+    return this.http.get<Cliente>('http://localhost:8080/api/clientes/'+id);
+  }
+
 }
