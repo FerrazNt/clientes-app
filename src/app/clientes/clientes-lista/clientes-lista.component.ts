@@ -15,7 +15,6 @@ export class ClientesListaComponent implements OnInit {
   constructor(private service: ClientesService,
               private router: Router) { 
 
-
   }
 
   ngOnInit(): void {
@@ -32,5 +31,4 @@ export class ClientesListaComponent implements OnInit {
       this.router.navigate(['/clientes-form']);
     }
   }
-
 }
