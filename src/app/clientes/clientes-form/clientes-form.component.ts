@@ -20,11 +20,23 @@ export class ClientesFormComponent {
   }
 
   onSubmit(){
-    this
+    if (this.cliente.id){
+      this
+      .service
+      .atualizarCliente(this.cliente)
+      .subscribe(response => {
+        this.erros = [];
+          this.sucesso=true;
+      },errorResponse => {
+          this.sucesso = false;
+          this.erros = ['Erro ao Atualzar o Cliente'];
+        }
+      );
+    }else{
+      this
       .service
       .salvarCliente(this.cliente)
       .subscribe(response => {
-        //console.log(response);
         this.erros = [];
         this.cliente.id = response.id;
         this.cliente.dataCadastro= response.dataCadastro;
@@ -33,7 +45,9 @@ export class ClientesFormComponent {
           this.sucesso = false;
           this.erros = errorResponse.error.errors;
         }
-      );      
+      );
+    }
+        
   }
 
   irParaLista(){
@@ -46,13 +60,10 @@ export class ClientesFormComponent {
       this
         .service
         .buscarClientesPorId(id)
-        .subscribe(response => {
-            this.erros = [];            
-            this.cliente.id = response.id;
-            this.cliente.dataCadastro = response.dataCadastro;
-            this.cliente.cpf = response.cpf;            
-            this.cliente.nome = response.nome;
-        });
+        .subscribe(
+            response => this.cliente = response,
+            errorResponse => this.cliente = new Cliente()  
+          );        
     }else{
       null;
     }

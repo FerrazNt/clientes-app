@@ -11,6 +11,9 @@ import { Cliente } from '../cliente';
 export class ClientesListaComponent implements OnInit {
 
   clientes: Cliente[] = [];
+  clienteSelecionado!: Cliente;
+  mensagemSucesso!: string;
+  mensagemErro!: string;
 
   constructor(private service: ClientesService,
               private router: Router) { 
@@ -24,11 +27,23 @@ export class ClientesListaComponent implements OnInit {
         .subscribe(resposta => this.clientes = resposta);
   }
 
-  public irParaNovoCadastro(id: number){
-    if (id){
-      this.router.navigate(['/clientes-form/'+id]);
-    }else{
-      this.router.navigate(['/clientes-form']);
-    }
+  preparaDelete(deleteClie: Cliente){
+    this.clienteSelecionado = deleteClie;
   }
+
+  deletarCliente(){
+    if (this.clienteSelecionado){
+      this.service
+      .deletarCliente(this.clienteSelecionado)
+      .subscribe(
+          response => {
+                        this.mensagemSucesso = 'Cliente excluído com sucesso!',
+                        this.ngOnInit()
+                      },
+          erro => this.mensagemErro = 'Ocorreu um ao tentar excluir o Cliente.'
+        );
+    }
+    
+  }
+
 }

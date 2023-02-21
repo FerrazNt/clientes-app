@@ -4,38 +4,65 @@
 </ol>
 <div class="container">
     <div class="row">
-        <div>
-            <div class="bg-light p-2 border rounded-3">
-                <button class="btn btn-primary" (click)="irParaNovoCadastro"><i class="fa fa-plus"></i> Novo</button>
+        <div class="col-md-12">
+            <div class="alert alert-success" role="alert" *ngIf="mensagemSucesso">
+                {{ mensagemSucesso }}
+            </div>
+           <div class="alert alert-danger" role="alert" *ngIf="mensagemErro">
+                {{ mensagemErro }}
             </div>
         </div>
-</div>
-<br />
-<div class="row">
-    <div class="col-md-12">
-        <table class="table table-condensed table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">CPF</th>
-                    <th scope="col">Data de Cadastro</th>
-                    <th scope="col">[ - ]</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let cliente of clientes">
-                    <td scope="row">{{ cliente.id }}</td>
-                    <td>{{ cliente.nome }}</td>
-                    <td>{{ cliente.cpf }}</td>
-                    <td>{{ cliente.dataCadastro }}</td>
-                    <td>
-                        <button type="button" class="btn btn-primary mr-1" (click)="irParaNovoCadastro(cliente.id)"><i class="fa fa-pen"></i></button>
-                        <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
     </div>
-</div>
+    <div class="row">
+        <div>
+            <div class="bg-light p-2 border rounded-3">
+                <button class="btn btn-primary" routerLink="/clientes-form"><i class="fa fa-plus"></i> Novo</button>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">CPF</th>
+                        <th scope="col">Data de Cadastro</th>
+                        <th scope="col">[ - ]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let cliente of clientes">
+                        <td scope="row">{{ cliente.id }}</td>
+                        <td>{{ cliente.nome }}</td>
+                        <td>{{ cliente.cpf }}</td>
+                        <td>{{ cliente.dataCadastro }}</td>
+                        <td>
+                            <button type="button" class="btn btn-primary mr-1" routerLink="/clientes-form/{{ cliente.id }}"><i class="fa fa-pen"></i></button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelecao" (click)="preparaDelete(cliente)"><i class="fa fa-trash"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="modalDelecao" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong>Confirmação de Operação</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" *ngIf="clienteSelecionado">
+                    Confirma a exclusão do cliente ID <strong>{{ clienteSelecionado.id }}</strong> - <strong>{{ clienteSelecionado.nome }}</strong>?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deletarCliente()">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

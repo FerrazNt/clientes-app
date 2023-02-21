@@ -61,7 +61,8 @@
         <div class="row">
             <div>
                 <div class="bg-light p-2 border rounded-3">
-                    <button type="submit" class="btn btn-success mr-2"><i class="fa fa-save"></i> Salvar</button>
+                    <button type="submit" class="btn btn-success mr-2" *ngIf="!cliente.id"><i class="fa fa-save"></i> Salvar</button>
+                    <button type="submit" class="btn btn-secondary mr-2" *ngIf="cliente.id"><i class="fa fa-rotate"></i> Atualizar</button>
                     <button type="button" class="btn btn-warning mr-2" (click)="irParaLista()"><i class="fa fa-circle-left"></i> Voltar</button>
                     <button type="button" class="btn btn-danger  mr-2"><i class="fa fa-trash"></i> Deletar</button>
                 </div>
