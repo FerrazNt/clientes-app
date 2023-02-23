@@ -16,7 +16,7 @@
     <div class="row">
         <div>
             <div class="bg-light p-2 border rounded-3">
-                <button class="btn btn-warning" routerLink="/clientes-form"><i class="fa fa-plus"></i> Novo</button>
+                <button class="btn btn-warning" routerLink="/clientes/form"><i class="fa fa-plus"></i> Novo</button>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@
                         <td>{{ cliente.cpf }}</td>
                         <td>{{ cliente.dataCadastro }}</td>
                         <td>
-                            <button type="button" class="btn btn-primary mr-1" routerLink="/clientes-form/{{ cliente.id }}"><i class="fa fa-pen"></i></button>
+                            <button type="button" class="btn btn-primary mr-1" routerLink="/clientes/form/{{ cliente.id }}"><i class="fa fa-pen"></i></button>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelecao" (click)="preparaDelete(cliente)"><i class="fa fa-trash"></i></button>
                         </td>
                     </tr>

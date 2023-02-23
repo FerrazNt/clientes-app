@@ -1,13 +1,95 @@
-<h3 class="mt-4">Serviços Prestados</h3>
+<h3 class="mt-4">Serviço Prestado</h3>
 <ol class="breadcrumb mb-4" style="font-size: 12px;">
-    <li class="breadcrumb-item active">Serviços</li>
+    <li class="breadcrumb-item active">Serviços Prestados</li>
 </ol>
 <div class="container">
     <div class="row">
         <div>
             <div class="bg-light p-2 border rounded-3">
-                <button class="btn btn-warning" routerLink="/servicos-form"><i class="fa fa-plus"></i> Novo</button>
+                <button class="btn btn-warning" routerLink="/servicos/form"><i class="fa fa-plus"></i> Novo</button>
             </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <br />
+    <div class="card border rounded-3">
+        <div class="card-header">
+            <div class="d-flex d-flex justify-content-between">
+                <h4>Filtro</h4>
+                <button 
+                    class="btn btn-secondary btn-sm border rounded-5 " 
+                    type="button" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#areaFiltro" 
+                    aria-expanded="false" 
+                    aria-controls="areaFiltro">
+                    <i class="fa fa-minimize"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body collapsi show" id="areaFiltro">
+            <form #consultaForm="ngForm" (submit)="consultar()">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nmCliente">Nome do Cliente: </label>
+                            <input type="text" class="form-control" name="nome" id="nmCliente" [(ngModel)]="nome" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="slMes">Mês do Serviço: </label>
+                            <select name="mes" 
+                                    id="slMes" 
+                                    class="form-select" 
+                                    aria-label="Selecione um Mês..."
+                                    [ngModelOptions]="{standalone: true}" 
+                                    [(ngModel)]="mes">
+                                <option value="" [value]="mes" selected="selected">Selecione um mês...</option>
+                                <option *ngFor="let mes of meses" [value]="mes">{{mes}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-warning">
+                            <i class="fa fa-magnifying-glass "></i> Consultar
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br />
+    <div class="col-md-12" *ngIf="!listaVazia">        
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Data Serviço</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col">[ - ]</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let servico of lista">
+                    <td>{{servico.id}}</td>
+                    <td>{{servico.dataServico}}</td>
+                    <td>{{servico.cliente.nome}} <button class="btn btn-primary btn-sm" routerLink="/clientes/form/{{ servico.cliente.id }}"><i class="fa fa-id-card"></i> </button></td>
+                    <td>{{servico.descricao}}</td>
+                    <td>R$ {{servico.valor}}</td>
+                    <td> -- </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12" *ngIf="listaVazia">
+        <div class="alert alert-secondary" role="alert">
+            Nenhum serviço encontrado...
         </div>
     </div>
 </div>

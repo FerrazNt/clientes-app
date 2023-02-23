@@ -51,7 +51,7 @@ export class ClientesFormComponent {
   }
 
   irParaLista(){
-    this.router.navigate(['/clientes']);
+    this.router.navigate(['/clientes/lista']);
   }
 
   ngOnInit(): void {
