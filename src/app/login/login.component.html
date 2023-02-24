@@ -13,16 +13,16 @@
                             </div>
                             <div class="card-body">
                                 <div class="alert alert-danger" *ngIf="loginErro">
-                                    Login e/ou Senha incrorreto(a).
+                                    {{erroMensagem}}
                                 </div>
                                 <form #loginForm="ngForm" (submit)="onSubmit()">
                                     <div class="form-group">
-                                        <label class="small mb-1">Login: </label>
-                                        <input type="text" 
+                                        <label class="small mb-1">E-Mail: </label>
+                                        <input type="email" 
                                             name="username"
                                             [(ngModel)]="username" 
                                             class="form-control" 
-                                            placeholder="Digite seu login..." />
+                                            placeholder="Digite seu e-mail..." />
                                     </div>
                                     <div class="form-group">
                                         <label class="small mb-1">Senha: </label>
@@ -40,8 +40,7 @@
                                 </form>
                             </div>
                             <div class="card-footer text-center">
-                                <div class="small">
-                                    
+                                <div class="small">                                    
                                         Ainda não tem cadastro? <a href="#" (click)="preparaCadastrar($event)">Cadastre-se!</a>
                                 </div>
                             </div>
