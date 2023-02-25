@@ -39,7 +39,12 @@ export class LoginComponent {
                     this.router.navigate(['/home']);
                   }, 
                   error: (e) => {
-                   this.erroMensagem = ['Usuário e/ou senha incorretos.'];
+                   if ( e.status == "401"){
+                    this.erroMensagem = ["ATENÇÃO: Falha ao conectar. Favor entrar em contato com o suporte."];
+                    
+                   }else {
+                    this.erroMensagem = ['Usuário e/ou senha incorretos.'];
+                   }
                   }
               }); 
     }else{
@@ -75,18 +80,27 @@ export class LoginComponent {
       usuario.password = this.password;
       this.auth
             .salvar(usuario)
-            .subscribe(
-              response => {
+            .subscribe({
+              next: (r) => {
                 this.mensagemSucesso = "Cadastro de Novo Usuário Realizado com Sucesso."
                 this.cadastrando = false;
                 this.username = "";
                 this.password = "";
               }, 
-              erroResponse =>  {
-                this.loginErro = true;
-                this.erroMensagem = erroResponse.error.errors;
+              error: (e) =>  {
+                if(e.status == "400"){
+                  this.loginErro = true;
+                  console.log(e);
+                  this.erroMensagem = e.error.errors;
+                }else if(e.status == "401"){
+                  this.loginErro = true;
+                  console.log(e);
+                  this.erroMensagem = ["ATENÇÃO: Falha ao conectar. Favor entrar em contato com o suporte."];
+                }else{
+                  this.erroMensagem = ["ATENÇÃO: Falha ao conectar. Favor entrar em contato com o suporte."];
+                }
               }
-           );
+            });
       }else{
         this.loginErro = true;
         this.erroMensagem.push("Fovor fornecer um e-mail válido.");

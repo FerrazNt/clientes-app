@@ -4,6 +4,8 @@ import { Usuario } from './login/usuario';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 
+import { JwtHelperService } from '@auth0/angular-jwt';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +16,29 @@ export class AuthService {
   clientID: string = environment.clientID;
   clientSecret: string = environment.clientSecret;
 
-  constructor(private http: HttpClient) { }
+  jwtHelper: JwtHelperService = new JwtHelperService();
+
+  constructor(private http: HttpClient) { 
+
+  }
+
+  obterToken(){
+    const tokenString = localStorage.getItem('access_token');
+    if(tokenString){
+      const token = JSON.parse(tokenString).access_token;
+      return token;
+    }
+    return null;
+  }
+
+  isAuthenticated(): boolean{
+    const token = this.obterToken();
+    if (token){
+      const expirado = this.jwtHelper.isTokenExpired(token);
+      return !expirado;
+    }
+    return false;
+  }
 
   salvar(usuario: Usuario): Observable<any>{
     return this.http.post<any>(this.apiURL+"/novo",usuario);
@@ -34,6 +58,19 @@ export class AuthService {
     };
 
     return this.http.post<any>(this.tokenUrl, params.toString(), { headers });
+  }
+
+  encerrarSessao(){
+    localStorage.removeItem('access_token');
+  }
+
+  getUsuarioAutenticado(){
+    const token = this.obterToken();
+    if(token){
+      const usuario = this.jwtHelper.decodeToken(token).user_name;
+      return usuario;
+    }
+    return null;
   }
 
 

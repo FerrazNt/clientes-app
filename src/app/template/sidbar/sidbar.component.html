@@ -23,11 +23,21 @@
                     <i class="fa fa-toolbox"></i> &nbsp;
                     Serviços
                 </a>
+
+                <div class="sb-sidenav-menu-heading">
+                    Conta
+                </div>
+                <a class="nav-link"
+                    (click)="sair()" 
+                    href="#">
+                    <i class="fa fa-duotone fa-right-from-bracket"></i> &nbsp;
+                    Sair
+                </a>
             </div>
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Usuário:</div>
-            Gregório Ferraz <button class="btn btn-secondary btn-sm" routerLink="/login"><i class="fa fa-arrow-left"></i> Sair</button>
+            {{ usuarioLogado }}
         </div>
     </nav>
 </div>

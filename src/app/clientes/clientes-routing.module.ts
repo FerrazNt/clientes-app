@@ -3,6 +3,7 @@ import { RouterModule, Routes, ActivatedRoute } from '@angular/router';
 import { ClientesFormComponent } from './clientes-form/clientes-form.component'
 import { ClientesListaComponent } from './clientes-lista/clientes-lista.component';
 import { LayoutComponent } from '../layout/layout.component';
+import { AuthGuard } from '../auth.guard';
 
 const routes: Routes = [
   { path: "clientes", component: LayoutComponent, children: [
@@ -11,7 +12,7 @@ const routes: Routes = [
     { path: 'form/:id', component: ClientesFormComponent },
     { path: '', redirectTo: '/clientes/lista', pathMatch: 'full' }
 
-  ]}
+  ], canActivate: [AuthGuard]}
 ];
 
 @NgModule({

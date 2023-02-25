@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../environments/environment';
 import {
   HttpRequest,
   HttpHandler,
@@ -9,22 +10,38 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
+  
+  baseUrl: string = environment.apiURLBase;
 
-  constructor() {}
+  urlsToNotUse: Array<string>;
+
+
+  constructor() {
+    this.urlsToNotUse= [
+      '/api/usuarios/',
+      '/api/usuarios/.+',
+      '/oauth/token ',
+      '/oauth/token/.+'
+    ];
+  }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const tokenString = localStorage.getItem("access_token");
+    
+      const tokenString = localStorage.getItem("access_token");
 
-    if( tokenString ){
-      const token = JSON.parse(tokenString);
-      const jwt = token.access_token;
-      request = request.clone({
-        setHeaders: {
-          Authorization: 'Bearer ' + jwt
-        }
-      })
-    }
+      const url = request.url;
 
-    return next.handle(request);
+      if( tokenString && !url.endsWith("/oauth/token")){
+        const token = JSON.parse(tokenString);
+        const jwt = token.access_token;
+        request = request.clone({
+          setHeaders: {
+            Authorization: 'Bearer ' + jwt
+          }
+        })
+      }
+      return next.handle(request);
+
   }
+
 }
