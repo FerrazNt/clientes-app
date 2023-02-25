@@ -1,15 +1,17 @@
 body,
-html {
+html,
+.bg-primary {
   height: 100%;
 }
 
-.bg {
+.bg-primary {
   /* The image used */
   background-image: url("../../assets/images/bg_login.jpg");
   /* Full height */
   height: 100%;
   /* Center and scale the image nicely */
   background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-repeat: repeat;
+  background-size: 100px;
+  box-shadow: inset -50px -50px 300px #000000;
 }

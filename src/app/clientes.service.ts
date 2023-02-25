@@ -16,6 +16,13 @@ export class ClientesService {
   }
 
   salvarCliente(cliente: Cliente) : Observable<Cliente>{
+    /*
+    // Isso foi substituído pelo Interceptor
+    const tokenString = localStorage.getItem('access_token');
+    const token = JSON.parse(tokenString!);
+    const headers = {
+      'Authorization': 'Bearer '+token.access_token
+    }*/
     return this.http.post<Cliente>(`${this.apiURL}/novo`, cliente);
   }
 
